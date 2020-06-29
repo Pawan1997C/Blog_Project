@@ -1,0 +1,20 @@
+{% for post in object_list %}
+
+<article class="media content-section">
+  <img class="rounded-circle account-img" src="{{ post.author.profile.image.url }}">
+    <div class="media-body">
+      <div class="article-metadata">
+        User: <a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author | title }}</a>
+        <small class="text-muted mr-2">{{ post.date_posted | date:"F d, Y" }}</small>
+        Category: <a href="{% url  'category-posts' post.category %}" class="mr-2">{{post.category}}</a>
+      </div>
+      <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
+      <a href="{% url 'post-detail' post.id %}"><img src="{{ post.image.url }}" width = "100%"></a>
+      <p class="article-content">{{ post.content | slice:":180" }}</p>
+        <div class="text-right">
+            <a href="{% url 'post-detail' post.id %}" class="btn btn-outline-info">Read More</a>
+        </div>
+    </div>
+  </article>
+
+{%endfor%}

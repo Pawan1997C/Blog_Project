@@ -1,0 +1,72 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width>, initial-scale=1.0">
+     <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <title>Document</title>
+</head>
+<body>
+
+    {% include 'blog/navbar.html' %}
+        <main role="main" class="container">
+            <div class="row">
+            <div class="col-md-8">
+                {% if messages %}
+
+                    {% for message in messages %}
+
+                        <div class="alert alert-{{message.tags}}">
+
+                            {{ message }}
+
+                        </div>
+
+                    {%endfor%}
+
+                {% endif %}
+
+                {% block content %}{% endblock %}
+            </div>
+                {% if request.user.is_authenticated %}
+
+                <div class="col-md-4">
+                    <div class="content-section">
+                    <h3>Search Posts</h3>
+                    <form class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" value = "{{ request.GET.search }}"  type="search" placeholder="Search" name="search" aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                    <h3 class="mt-4">Latest Posts</h3>
+                            <ul class="list-group mt-2">
+                                
+                                {% for post in object_list  %}
+                                    <li class="list-group-item list-group-item-light">{{post.title}}</li>
+                                {% endfor %}
+                            </ul>
+                    </div>
+                </div>
+
+                {% endif %}
+            </div>
+        </main>
+    
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->   
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"  crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"  crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"  crossorigin="anonymous"></script>
+
+<script>
+
+setTimeout(() => document.querySelector('.alert').remove(), 3000);
+
+</script>
+</body>
+</html>
